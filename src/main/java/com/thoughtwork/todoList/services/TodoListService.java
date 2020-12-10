@@ -15,16 +15,22 @@ import java.util.Optional;
 @Service
 public class TodoListService {
     private final String TODO_ITEM_NOT_FOUND = "Todo Item not found";
+    @Autowired
     private TodoListRepository todoListRepository;
+    @Autowired
     private LabelRepository labelRepository;
 
-    public TodoListService(TodoListRepository todoListRepository) {
-        this.todoListRepository = todoListRepository;
-    }
 
     public TodoListService(TodoListRepository todoListRepository, LabelRepository labelRepository) {
         this.todoListRepository = todoListRepository;
         this.labelRepository = labelRepository;
+    }
+
+    public TodoListService() {
+    }
+
+    public TodoListService(TodoListRepository todoListRepository) {
+        this.todoListRepository = todoListRepository;
     }
 
     public List<TodoItem> getAllTodoItems() {
@@ -56,14 +62,13 @@ public class TodoListService {
 
     }
 
-    public List<Label> getLabelsByTodoItemID(String todoID){
+    public List<Label> getLabelsByTodoItemID(String todoID) {
         Optional<TodoItem> todoItem = todoListRepository.findById(todoID);
         List<Label> labels = new ArrayList<>();
-        if (todoItem.isPresent()){
+        if (todoItem.isPresent()) {
             labelRepository.findAllById(todoItem.get().getLabelIDs()).forEach(labels::add);
             return labels;
-        }
-        else{
+        } else {
             throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
         }
     }

@@ -3,6 +3,7 @@ package com.thoughtwork.todoList.services;
 import com.thoughtwork.todoList.entities.Label;
 import com.thoughtwork.todoList.exceptions.LabelNotFoundException;
 import com.thoughtwork.todoList.repositories.LabelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +12,14 @@ import java.util.Optional;
 @Service
 public class LabelService {
     private final String LABEL_NOT_FOUND = "LABEL_NOT_FOUND";
+    @Autowired
     private LabelRepository labelRepository;
 
     public LabelService(LabelRepository labelRepository) {
         this.labelRepository = labelRepository;
+    }
+
+    public LabelService() {
     }
 
     public List<Label> getAllLabel() {

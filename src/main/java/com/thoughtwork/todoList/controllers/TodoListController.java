@@ -27,13 +27,14 @@ public class TodoListController {
     @Autowired
     private LabelMapper labelMapper;
 
-    private List<LabelResponse> getLabels(String todoID){
+    private List<LabelResponse> getLabels(String todoID) {
         return todoListService.getLabelsByTodoItemID(todoID).stream().map(labelMapper::toResponse).collect(Collectors.toList());
     }
+
     @GetMapping
     public List<TodoItemResponse> getAllTodoItems() {
         return todoListService.getAllTodoItems().stream().map(todoItem ->
-            todoItemMapper.toResponse(todoItem,getLabels(todoItem.getId()))
+                todoItemMapper.toResponse(todoItem, getLabels(todoItem.getId()))
         ).collect(Collectors.toList());
     }
 
@@ -41,7 +42,7 @@ public class TodoListController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public TodoItemResponse addTodoItem(@RequestBody TodoItemRequest todoItemRequest) {
         TodoItem todoItem = todoListService.addTodoItem(todoItemMapper.toEntity(todoItemRequest));
-        return todoItemMapper.toResponse(todoItem,getLabels(todoItem.getId()));
+        return todoItemMapper.toResponse(todoItem, getLabels(todoItem.getId()));
 
     }
 
@@ -53,6 +54,6 @@ public class TodoListController {
     @PutMapping("/{todoID}")
     public TodoItemResponse updateTodo(@PathVariable String todoID, @RequestBody TodoItemRequest todoItemRequest) {
         TodoItem todoItem = todoListService.updateTodoItem(todoID, todoItemMapper.toEntity(todoItemRequest));
-        return todoItemMapper.toResponse(todoItem,getLabels(todoItem.getId()));
+        return todoItemMapper.toResponse(todoItem, getLabels(todoItem.getId()));
     }
 }

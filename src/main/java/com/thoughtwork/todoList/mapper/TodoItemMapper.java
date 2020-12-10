@@ -5,10 +5,12 @@ import com.thoughtwork.todoList.dto.TodoItemRequest;
 import com.thoughtwork.todoList.dto.TodoItemResponse;
 import com.thoughtwork.todoList.entities.TodoItem;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TodoItemMapper {
     public TodoItem toEntity(TodoItemRequest todoItemRequest) {
         TodoItem todoItem = new TodoItem();

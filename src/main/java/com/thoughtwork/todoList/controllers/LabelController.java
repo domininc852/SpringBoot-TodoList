@@ -1,10 +1,12 @@
 package com.thoughtwork.todoList.controllers;
 
+import com.thoughtwork.todoList.dto.LabelRequest;
 import com.thoughtwork.todoList.dto.LabelResponse;
 import com.thoughtwork.todoList.entities.Label;
 import com.thoughtwork.todoList.mapper.LabelMapper;
 import com.thoughtwork.todoList.services.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +27,10 @@ public class LabelController {
     }
 
     @PostMapping
-    public LabelResponse addLabel(@RequestBody Label label) {
-        return labelMapper.toResponse(labelService.addLabel(label));
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public LabelResponse addLabel(@RequestBody LabelRequest labelRequest) {
+        Label label = labelService.addLabel(labelMapper.toEntity(labelRequest));
+        return labelMapper.toResponse(label);
     }
 
     @DeleteMapping("/{labelID}")
@@ -35,7 +39,8 @@ public class LabelController {
     }
 
     @PutMapping("/{labelID}")
-    public LabelResponse updateLabel(@PathVariable String labelID, @RequestBody Label label) {
-        return labelMapper.toResponse(labelService.updateLabel(labelID, label));
+    public LabelResponse updateLabel(@PathVariable String labelID, @RequestBody LabelRequest labelRequest) {
+        Label label = labelService.updateLabel(labelID, labelMapper.toEntity(labelRequest));
+        return labelMapper.toResponse(label);
     }
 }
