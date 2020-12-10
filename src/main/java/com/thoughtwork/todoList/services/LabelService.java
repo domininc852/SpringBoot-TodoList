@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class LabelService {
-    private final String LABEL_NOT_FOUND ="LABEL_NOT_FOUND";
+    private final String LABEL_NOT_FOUND = "LABEL_NOT_FOUND";
     private LabelRepository labelRepository;
 
     public LabelService(LabelRepository labelRepository) {
@@ -26,11 +26,20 @@ public class LabelService {
     }
 
     public void deleteLabel(String labelID) {
-        Optional<Label> labelToDelete=labelRepository.findById(labelID);
-        if (labelToDelete.isPresent()){
+        Optional<Label> labelToDelete = labelRepository.findById(labelID);
+        if (labelToDelete.isPresent()) {
             labelRepository.deleteById(labelID);
+        } else {
+            throw new LabelNotFoundException(LABEL_NOT_FOUND);
         }
-        else{
+    }
+
+    public Label updateLabel(String labelID, Label label) {
+        Optional<Label> labelToUpdate = labelRepository.findById(labelID);
+        if (labelToUpdate.isPresent()) {
+            label.setId(labelToUpdate.get().getId());
+            return labelRepository.save(label);
+        } else {
             throw new LabelNotFoundException(LABEL_NOT_FOUND);
         }
     }

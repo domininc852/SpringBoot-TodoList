@@ -92,4 +92,14 @@ public class TodoListServiceTest {
         assertEquals(todoItem, companyArgumentCaptor.getValue());
     }
 
+    @Test
+    public void should_throw_todo_item_not_found_exception_when_update_todo_item_given_invalid_todo_item_ID() {
+        //given
+        TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
+        TodoListService todoListService = new TodoListService(todoListRepository);
+        Mockito.when(todoListRepository.findById(any())).thenReturn(Optional.empty());
+        //when
+        //then
+        assertThrows(TodoItemNotFoundException.class, () -> todoListService.updateTodoItem("1", null));
+    }
 }

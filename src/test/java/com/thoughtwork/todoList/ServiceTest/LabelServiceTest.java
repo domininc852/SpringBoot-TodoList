@@ -5,6 +5,7 @@ import com.thoughtwork.todoList.exceptions.LabelNotFoundException;
 import com.thoughtwork.todoList.repositories.LabelRepository;
 import com.thoughtwork.todoList.services.LabelService;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.*;
@@ -27,6 +28,7 @@ public class LabelServiceTest {
         //then
         assertEquals(labels, actualLabels);
     }
+
     @Test
     public void should_return_created_label_when_get_add_label_given_a_label() {
         //given
@@ -66,5 +68,33 @@ public class LabelServiceTest {
         assertThrows(LabelNotFoundException.class, () -> labelService.deleteLabel("1"));
 
     }
+
+    @Test
+    public void should_return_updated_label_when_update_label_given_valid_label_ID() {
+        //given
+        LabelRepository labelRepository = Mockito.mock(LabelRepository.class);
+        LabelService labelService = new LabelService(labelRepository);
+        Label label = new Label("1", "shopping", "white");
+        Mockito.when(labelRepository.findById(any())).thenReturn(Optional.of(label));
+        Mockito.when(labelRepository.save(any())).thenReturn(label);
+        //when
+        labelService.updateLabel("1", label);
+        final ArgumentCaptor<Label> companyArgumentCaptor = ArgumentCaptor.forClass(Label.class);
+        Mockito.verify(labelRepository, times(1)).save(companyArgumentCaptor.capture());
+        //then
+        assertEquals(label, companyArgumentCaptor.getValue());
+    }
+
+    @Test
+    public void should_return_label_not_found_exception_when_update_label_given_invalid_label_ID() {
+        //given
+        LabelRepository labelRepository = Mockito.mock(LabelRepository.class);
+        LabelService labelService = new LabelService(labelRepository);
+        Mockito.when(labelRepository.findById(any())).thenReturn(Optional.empty());
+        //when
+        //then
+        assertThrows(LabelNotFoundException.class, () -> labelService.updateLabel("1", null));
+    }
+
 
 }

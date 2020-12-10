@@ -27,4 +27,8 @@ public class LabelController {
     public void deleteLabel(@PathVariable String labelID){
         labelService.deleteLabel(labelID);
     }
+    @PutMapping("/{labelID}")
+    public Label updateLabel(@PathVariable String labelID, @RequestBody Label label){
+        return labelService.updateLabel(labelID, label);
+    }
 }
