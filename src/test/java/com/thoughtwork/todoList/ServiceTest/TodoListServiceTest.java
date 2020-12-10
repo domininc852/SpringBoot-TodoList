@@ -25,7 +25,7 @@ public class TodoListServiceTest {
         //given
         TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
         TodoListService todoListService = new TodoListService(todoListRepository);
-        List<Label> labels = Collections.singletonList(new Label("1", "shopping", "white"));
+        List<String> labels = Collections.singletonList("1");
         List<TodoItem> todos = Collections.singletonList(new TodoItem("1", "abc", false, labels));
         Mockito.when(todoListRepository.findAll()).thenReturn(todos);
         //when
@@ -39,7 +39,7 @@ public class TodoListServiceTest {
         //given
         TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
         TodoListService todoListService = new TodoListService(todoListRepository);
-        List<Label> labels = Collections.singletonList(new Label("1", "shopping", "white"));
+        List<String> labels = Collections.singletonList("1");
         TodoItem todoItem = new TodoItem("1", "abc", false, labels);
         Mockito.when(todoListRepository.save(todoItem)).thenReturn(todoItem);
         //when
@@ -53,7 +53,7 @@ public class TodoListServiceTest {
         //given
         TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
         TodoListService todoListService = new TodoListService(todoListRepository);
-        List<Label> labels = Collections.singletonList(new Label("1", "shopping", "white"));
+        List<String> labels = Collections.singletonList("1");
         TodoItem todoItem = new TodoItem("1", "abc", false, labels);
         Mockito.when(todoListRepository.findById(any())).thenReturn(Optional.of(todoItem));
 
@@ -80,7 +80,7 @@ public class TodoListServiceTest {
         //given
         TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
         TodoListService todoListService = new TodoListService(todoListRepository);
-        List<Label> labels = Collections.singletonList(new Label("1", "shopping", "white"));
+        List<String> labels = Collections.singletonList("1");
         TodoItem todoItem = new TodoItem("1", "abc", false, labels);
         Mockito.when(todoListRepository.findById(any())).thenReturn(Optional.of(todoItem));
         Mockito.when(todoListRepository.save(any())).thenReturn((todoItem));
