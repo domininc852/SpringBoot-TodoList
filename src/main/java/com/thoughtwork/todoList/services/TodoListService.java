@@ -12,6 +12,10 @@ public class TodoListService {
     @Autowired
     private TodoListRepository todoListRepository;
 
+    public TodoListService(TodoListRepository todoListRepository) {
+        this.todoListRepository=todoListRepository;
+    }
+
     public List<TodoItem> getAllTodoItems(){
         return todoListRepository.findAll();
     }

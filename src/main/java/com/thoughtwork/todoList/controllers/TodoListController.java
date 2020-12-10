@@ -21,6 +21,6 @@ public class TodoListController {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public TodoItem addTodoItem(@RequestBody TodoItem todoItem){
-        todoListService.addTodoItem(todoItem);
+       return todoListService.addTodoItem(todoItem);
     }
 }
