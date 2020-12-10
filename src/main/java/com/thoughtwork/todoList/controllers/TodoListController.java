@@ -23,4 +23,9 @@ public class TodoListController {
     public TodoItem addTodoItem(@RequestBody TodoItem todoItem){
        return todoListService.addTodoItem(todoItem);
     }
+    @DeleteMapping("/{todoID}")
+    public void deleteTodo(@PathVariable String todoID){
+        todoListService.deleteTodoItem(todoID);
+    }
+
 }
