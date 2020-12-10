@@ -1,18 +1,16 @@
 package com.thoughtwork.todoList.dto;
 
-import com.thoughtwork.todoList.entities.Label;
-
 import java.util.List;
 
 public class TodoItemRequest {
     private String text;
     private boolean done;
-    private List<String> labelIDs;
+    private List<String> labels;
 
-    public TodoItemRequest(String text, boolean done, List<String> labelIDs) {
+    public TodoItemRequest(String text, boolean done, List<String> labels) {
         this.text = text;
         this.done = done;
-        this.labelIDs = labelIDs;
+        this.labels = labels;
     }
 
     public TodoItemRequest() {
@@ -34,11 +32,11 @@ public class TodoItemRequest {
         this.done = done;
     }
 
-    public List<String> getLabelIDs() {
-        return labelIDs;
+    public List<String> getLabels() {
+        return labels;
     }
 
-    public void setLabelIDs(List<String> labelIDs) {
-        this.labelIDs = labelIDs;
+    public void setLabels(List<String> labels) {
+        this.labels = labels;
     }
 }

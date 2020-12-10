@@ -66,7 +66,7 @@ public class TodoListService {
         Optional<TodoItem> todoItem = todoListRepository.findById(todoID);
         List<Label> labels = new ArrayList<>();
         if (todoItem.isPresent()) {
-            labelRepository.findAllById(todoItem.get().getLabelIDs()).forEach(labels::add);
+            labelRepository.findAllById(todoItem.get().getLabels()).forEach(labels::add);
             return labels;
         } else {
             throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);

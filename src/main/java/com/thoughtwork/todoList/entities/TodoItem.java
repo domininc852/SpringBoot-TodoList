@@ -13,13 +13,13 @@ public class TodoItem {
     private String id;
     private String text;
     private boolean done;
-    private List<String> labelIDs = new ArrayList<>();
+    private List<String> labels = new ArrayList<>();
 
     public TodoItem(String id, String text, boolean done, List<String> labels) {
         this.id = id;
         this.text = text;
         this.done = done;
-        this.labelIDs = labels;
+        this.labels = labels;
     }
 
     public TodoItem() {
@@ -49,11 +49,11 @@ public class TodoItem {
         this.done = done;
     }
 
-    public List<String> getLabelIDs() {
-        return labelIDs;
+    public List<String> getLabels() {
+        return labels;
     }
 
-    public void setLabelIDs(List<String> labelIDs) {
-        this.labelIDs = labelIDs;
+    public void setLabels(List<String> labels) {
+        this.labels = labels;
     }
 }

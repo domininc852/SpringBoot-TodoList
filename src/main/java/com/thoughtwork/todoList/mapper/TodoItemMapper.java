@@ -15,8 +15,8 @@ public class TodoItemMapper {
     public TodoItem toEntity(TodoItemRequest todoItemRequest) {
         TodoItem todoItem = new TodoItem();
         BeanUtils.copyProperties(todoItemRequest, todoItem);
-        if (todoItemRequest.getLabelIDs() == null) {
-            todoItem.setLabelIDs(new ArrayList<>());
+        if (todoItemRequest.getLabels() == null) {
+            todoItem.setLabels(new ArrayList<>());
         }
         return todoItem;
     }
