@@ -2,6 +2,7 @@ package com.thoughtwork.todoList.ServiceTest;
 
 import com.thoughtwork.todoList.entities.Label;
 import com.thoughtwork.todoList.entities.TodoItem;
+import com.thoughtwork.todoList.exceptions.TodoItemNotFoundException;
 import com.thoughtwork.todoList.repositories.TodoListRepository;
 import com.thoughtwork.todoList.services.TodoListService;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
@@ -29,6 +31,7 @@ public class TodoListServiceTest {
         //then
         assertEquals(todos, actualTodos);
     }
+
     @Test
     public void should_return_todo_item_when_add_todo_given_a_todo_item() {
         //given
@@ -42,6 +45,7 @@ public class TodoListServiceTest {
         //then
         assertEquals(todoItem, actualTodo);
     }
+
     @Test
     public void should_delete_todo_item_when_delete_todo_item_given_valid_companyID() {
         //given
@@ -55,5 +59,17 @@ public class TodoListServiceTest {
         todoListService.deleteTodoItem("1");
         //then
         Mockito.verify(todoListRepository, times(1)).deleteById("1");
+    }
+
+    @Test
+    public void should_throw_todo_item_not_found_error_when_delete_company_given_invalid_companyID() {
+        //given
+        TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
+        TodoListService todoListService = new TodoListService(todoListRepository);
+        Mockito.when(todoListRepository.findById(any())).thenReturn(Optional.empty());
+
+        //when
+        //then
+        assertThrows(TodoItemNotFoundException.class, () -> todoListService.deleteTodoItem("1"));
     }
 }

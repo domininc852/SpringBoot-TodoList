@@ -4,6 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document
@@ -12,7 +13,7 @@ public class TodoItem {
     private String id;
     private String text;
     private boolean done;
-    private List<Label> labels;
+    private List<Label> labels = new ArrayList<>();
 
     public TodoItem(String id, String text, boolean done, List<Label> labels) {
         this.id = id;
