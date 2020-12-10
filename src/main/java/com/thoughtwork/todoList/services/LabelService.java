@@ -16,6 +16,10 @@ public class LabelService {
     }
 
     public List<Label> getAllLabel() {
+        return labelRepository.findAll();
+    }
+
+    public Label addLabel(Label label) {
         return null;
     }
 }

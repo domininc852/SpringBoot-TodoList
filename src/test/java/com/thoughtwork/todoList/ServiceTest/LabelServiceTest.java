@@ -26,4 +26,17 @@ public class LabelServiceTest {
         //then
         assertEquals(labels, actualLabels);
     }
+    @Test
+    public void should_return_created_label_when_get_add_label_given_a_label() {
+        //given
+        LabelRepository labelRepository = Mockito.mock(LabelRepository.class);
+        LabelService labelService = new LabelService(labelRepository);
+        Label label = new Label("1", "shopping", "white");
+        Mockito.when(labelRepository.save(label)).thenReturn(label);
+        //when
+        Label actualLabel = labelService.addLabel(label);
+        //then
+        assertEquals(label, actualLabel);
+    }
+
 }

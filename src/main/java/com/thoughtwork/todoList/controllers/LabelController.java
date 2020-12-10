@@ -3,9 +3,7 @@ package com.thoughtwork.todoList.controllers;
 import com.thoughtwork.todoList.entities.Label;
 import com.thoughtwork.todoList.services.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,5 +16,10 @@ public class LabelController {
     @GetMapping
     public List<Label> getAllLabel() {
         return labelService.getAllLabel();
+    }
+
+    @PostMapping
+    public Label addLabel(@RequestBody Label label){
+        return labelService.addLabel(label);
     }
 }
