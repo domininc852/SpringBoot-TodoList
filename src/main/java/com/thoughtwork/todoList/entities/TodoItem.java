@@ -13,7 +13,7 @@ public class TodoItem {
     private String id;
     private String text;
     private boolean done;
-    private List<String> labelIDs = new ArrayList<>();
+    private List<String> labelIDs;
 
     public TodoItem(String id, String text, boolean done, List<String> labels) {
         this.id = id;
