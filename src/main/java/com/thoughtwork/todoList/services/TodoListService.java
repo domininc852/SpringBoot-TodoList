@@ -1,11 +1,14 @@
 package com.thoughtwork.todoList.services;
 
+import com.thoughtwork.todoList.entities.Label;
 import com.thoughtwork.todoList.entities.TodoItem;
 import com.thoughtwork.todoList.exceptions.TodoItemNotFoundException;
+import com.thoughtwork.todoList.repositories.LabelRepository;
 import com.thoughtwork.todoList.repositories.TodoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +16,15 @@ import java.util.Optional;
 public class TodoListService {
     private final String TODO_ITEM_NOT_FOUND = "Todo Item not found";
     private TodoListRepository todoListRepository;
+    private LabelRepository labelRepository;
 
     public TodoListService(TodoListRepository todoListRepository) {
         this.todoListRepository = todoListRepository;
+    }
+
+    public TodoListService(TodoListRepository todoListRepository, LabelRepository labelRepository) {
+        this.todoListRepository = todoListRepository;
+        this.labelRepository = labelRepository;
     }
 
     public List<TodoItem> getAllTodoItems() {
@@ -45,5 +54,17 @@ public class TodoListService {
         }
         throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
 
+    }
+
+    public List<Label> getLabelsByTodoItemID(String todoID){
+        Optional<TodoItem> todoItem = todoListRepository.findById(todoID);
+        List<Label> labels = new ArrayList<>();
+        if (todoItem.isPresent()){
+            labelRepository.findAllById(todoItem.get().getLabelIDs()).forEach(labels::add);
+            return labels;
+        }
+        else{
+            throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
+        }
     }
 }
