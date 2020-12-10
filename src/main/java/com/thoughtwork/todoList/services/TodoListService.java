@@ -39,6 +39,11 @@ public class TodoListService {
     }
 
     public TodoItem updateTodoItem(String todoID, TodoItem todoItem) {
-        return null;
+        Optional<TodoItem> todoItemToUpdate = todoListRepository.findById(todoID);
+        if (todoItemToUpdate.isPresent()){
+            return todoListRepository.save(todoItem);
+        }
+        throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
+
     }
 }
