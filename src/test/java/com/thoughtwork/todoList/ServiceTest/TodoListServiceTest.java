@@ -8,6 +8,7 @@ import com.thoughtwork.todoList.services.TodoListService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -73,6 +74,7 @@ public class TodoListServiceTest {
         //then
         assertThrows(TodoItemNotFoundException.class, () -> todoListService.deleteTodoItem("1"));
     }
+
     @Test
     public void should_return_updated_todo_item_when_update_todo_item_given_valid_todo_item_ID() {
         //given
@@ -83,7 +85,7 @@ public class TodoListServiceTest {
         Mockito.when(todoListRepository.findById(any())).thenReturn(Optional.of(todoItem));
         Mockito.when(todoListRepository.save(any())).thenReturn((todoItem));
         //when
-        todoListService.updateTodoItem("1",todoItem);
+        todoListService.updateTodoItem("1", todoItem);
         final ArgumentCaptor<TodoItem> companyArgumentCaptor = ArgumentCaptor.forClass(TodoItem.class);
         Mockito.verify(todoListRepository, times(1)).save(companyArgumentCaptor.capture());
         //then

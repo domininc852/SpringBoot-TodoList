@@ -1,4 +1,5 @@
 package com.thoughtwork.todoList.services;
+
 import com.thoughtwork.todoList.entities.TodoItem;
 import com.thoughtwork.todoList.exceptions.TodoItemNotFoundException;
 import com.thoughtwork.todoList.repositories.TodoListRepository;
@@ -10,8 +11,7 @@ import java.util.Optional;
 
 @Service
 public class TodoListService {
-    private final String TODO_ITEM_NOT_FOUND="Todo Item not found";
-    @Autowired
+    private final String TODO_ITEM_NOT_FOUND = "Todo Item not found";
     private TodoListRepository todoListRepository;
 
     public TodoListService(TodoListRepository todoListRepository) {
@@ -28,10 +28,9 @@ public class TodoListService {
 
     public void deleteTodoItem(String todoID) {
         Optional<TodoItem> todoItemToDelete = todoListRepository.findById(todoID);
-        if (todoItemToDelete.isPresent()){
+        if (todoItemToDelete.isPresent()) {
             todoListRepository.deleteById(todoItemToDelete.get().getId());
-        }
-        else{
+        } else {
             throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
         }
 
@@ -40,7 +39,7 @@ public class TodoListService {
 
     public TodoItem updateTodoItem(String todoID, TodoItem todoItem) {
         Optional<TodoItem> todoItemToUpdate = todoListRepository.findById(todoID);
-        if (todoItemToUpdate.isPresent()){
+        if (todoItemToUpdate.isPresent()) {
             return todoListRepository.save(todoItem);
         }
         throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
