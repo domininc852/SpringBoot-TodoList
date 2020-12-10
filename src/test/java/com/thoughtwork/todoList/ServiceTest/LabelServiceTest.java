@@ -6,12 +6,11 @@ import com.thoughtwork.todoList.services.LabelService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 
 public class LabelServiceTest {
     @Test
@@ -37,6 +36,20 @@ public class LabelServiceTest {
         Label actualLabel = labelService.addLabel(label);
         //then
         assertEquals(label, actualLabel);
+    }
+
+    @Test
+    public void should_delete_todo_item_when_delete_todo_item_given_valid_todo_item_ID() {
+        //given
+        LabelRepository labelRepository = Mockito.mock(LabelRepository.class);
+        LabelService labelService = new LabelService(labelRepository);
+        Label label = new Label("1", "shopping", "white");
+        Mockito.when(labelRepository.findById(any())).thenReturn(Optional.of(label));
+
+        //when
+        labelService.deleteLabel("1");
+        //then
+        Mockito.verify(labelRepository, times(1)).deleteById("1");
     }
 
 }

@@ -20,6 +20,10 @@ public class LabelService {
     }
 
     public Label addLabel(Label label) {
-        return null;
+        return labelRepository.save(label);
+    }
+
+    public void deleteLabel(String labelID) {
+
     }
 }

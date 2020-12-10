@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/labels")
+@CrossOrigin
 public class LabelController {
     @Autowired
     private LabelService labelService;
@@ -21,5 +22,9 @@ public class LabelController {
     @PostMapping
     public Label addLabel(@RequestBody Label label){
         return labelService.addLabel(label);
+    }
+    @DeleteMapping("/{labelID}")
+    public void deleteLabel(@PathVariable String labelID){
+        labelService.deleteLabel(labelID);
     }
 }
