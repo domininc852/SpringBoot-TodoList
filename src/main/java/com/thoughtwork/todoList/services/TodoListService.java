@@ -1,5 +1,4 @@
 package com.thoughtwork.todoList.services;
-
 import com.thoughtwork.todoList.entities.TodoItem;
 import com.thoughtwork.todoList.exceptions.TodoItemNotFoundException;
 import com.thoughtwork.todoList.repositories.TodoListRepository;
@@ -37,5 +36,9 @@ public class TodoListService {
         }
 
 
+    }
+
+    public TodoItem updateTodoItem(String todoID, TodoItem todoItem) {
+        return null;
     }
 }

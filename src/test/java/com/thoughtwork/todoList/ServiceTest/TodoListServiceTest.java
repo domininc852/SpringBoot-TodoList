@@ -6,6 +6,7 @@ import com.thoughtwork.todoList.exceptions.TodoItemNotFoundException;
 import com.thoughtwork.todoList.repositories.TodoListRepository;
 import com.thoughtwork.todoList.services.TodoListService;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +48,7 @@ public class TodoListServiceTest {
     }
 
     @Test
-    public void should_delete_todo_item_when_delete_todo_item_given_valid_companyID() {
+    public void should_delete_todo_item_when_delete_todo_item_given_valid_todo_item_ID() {
         //given
         TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
         TodoListService todoListService = new TodoListService(todoListRepository);
@@ -62,7 +63,7 @@ public class TodoListServiceTest {
     }
 
     @Test
-    public void should_throw_todo_item_not_found_error_when_delete_company_given_invalid_companyID() {
+    public void should_throw_todo_item_not_found_error_when_delete_company_given_invalid_todo_item_ID() {
         //given
         TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
         TodoListService todoListService = new TodoListService(todoListRepository);
@@ -72,4 +73,21 @@ public class TodoListServiceTest {
         //then
         assertThrows(TodoItemNotFoundException.class, () -> todoListService.deleteTodoItem("1"));
     }
+    @Test
+    public void should_return_updated_todo_item_when_update_todo_item_given_valid_todo_item_ID() {
+        //given
+        TodoListRepository todoListRepository = Mockito.mock(TodoListRepository.class);
+        TodoListService todoListService = new TodoListService(todoListRepository);
+        List<Label> labels = Collections.singletonList(new Label("1", "shopping", "white"));
+        TodoItem todoItem = new TodoItem("1", "abc", false, labels);
+        Mockito.when(todoListRepository.findById(any())).thenReturn(Optional.of(todoItem));
+        Mockito.when(todoListRepository.save(any())).thenReturn((todoItem));
+        //when
+        todoListService.updateTodoItem("1",todoItem);
+        final ArgumentCaptor<TodoItem> companyArgumentCaptor = ArgumentCaptor.forClass(TodoItem.class);
+        Mockito.verify(todoListRepository, times(1)).save(companyArgumentCaptor.capture());
+        //then
+        assertEquals(todoItem, companyArgumentCaptor.getValue());
+    }
+
 }

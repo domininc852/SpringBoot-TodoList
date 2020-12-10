@@ -28,4 +28,8 @@ public class TodoListController {
         todoListService.deleteTodoItem(todoID);
     }
 
+    @PutMapping("/{todoID}")
+    public TodoItem updateTodo(@PathVariable String todoID, @RequestBody TodoItem todoItem){
+        return todoListService.updateTodoItem(todoID,todoItem);
+    }
 }
