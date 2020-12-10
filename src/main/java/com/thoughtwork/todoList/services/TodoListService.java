@@ -29,7 +29,7 @@ public class TodoListService {
     public void deleteTodoItem(String todoID) {
         Optional<TodoItem> todoItemToDelete = todoListRepository.findById(todoID);
         if (todoItemToDelete.isPresent()) {
-            todoListRepository.deleteById(todoItemToDelete.get().getId());
+            todoListRepository.deleteById(todoID);
         } else {
             throw new TodoItemNotFoundException(TODO_ITEM_NOT_FOUND);
         }

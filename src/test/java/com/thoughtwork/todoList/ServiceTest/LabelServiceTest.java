@@ -1,6 +1,7 @@
 package com.thoughtwork.todoList.ServiceTest;
 
 import com.thoughtwork.todoList.entities.Label;
+import com.thoughtwork.todoList.exceptions.LabelNotFoundException;
 import com.thoughtwork.todoList.repositories.LabelRepository;
 import com.thoughtwork.todoList.services.LabelService;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.mockito.Mockito;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
@@ -39,7 +41,7 @@ public class LabelServiceTest {
     }
 
     @Test
-    public void should_delete_todo_item_when_delete_todo_item_given_valid_todo_item_ID() {
+    public void should_delete_todo_item_when_delete_label_given_valid_label_ID() {
         //given
         LabelRepository labelRepository = Mockito.mock(LabelRepository.class);
         LabelService labelService = new LabelService(labelRepository);
@@ -50,6 +52,19 @@ public class LabelServiceTest {
         labelService.deleteLabel("1");
         //then
         Mockito.verify(labelRepository, times(1)).deleteById("1");
+    }
+
+    @Test
+    public void should_return_label_not_found_exception_when_delete_label_given_invalid_label_ID() {
+        //given
+        LabelRepository labelRepository = Mockito.mock(LabelRepository.class);
+        LabelService labelService = new LabelService(labelRepository);
+        Mockito.when(labelRepository.findById(any())).thenReturn(Optional.empty());
+
+        //when
+        //then
+        assertThrows(LabelNotFoundException.class, () -> labelService.deleteLabel("1"));
+
     }
 
 }
